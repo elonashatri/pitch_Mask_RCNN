@@ -56,3 +56,11 @@ pip-delete-this-directory.txt
 .venv
 venv/
 ENV/
+
+only_position
+=1.3*
+only_position.zip
+
+__MACOSX/
+
+git-credential-osxkeychain
