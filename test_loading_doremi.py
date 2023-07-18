@@ -7,22 +7,33 @@ import skimage.draw
 from tqdm import tqdm
 from xml.dom import minidom
 import glob
+from sklearn.model_selection import train_test_split
 
 # Assuming that these paths are defined in your project
-IMG_PATH = "/homes/es314/pitch_Mask_RCNN/only_position/homophonic_only_pos/Images"
-XML_DATA_PATH = "/homes/es314/pitch_Mask_RCNN/only_position/homophonic_only_pos/"
-CLASSNAMES_PATH = "/homes/es314/pitch_Mask_RCNN/position_mapping.json"
+ROOT_PATH = "/homes/es314/pitch_Mask_RCNN/only_position/"
+FOLDERS = ["generated_data_only_pos", "monophonic_only_pos", "polyphonic_only_pos", "pianoform_only_pos"]
 
 class DoremiDataset:
     def __init__(self):
         self.classname_set = set()
 
-    def load_Doremi(self, subset):
-        assert subset in ["xml_by_page"]
-        dataset_dir = XML_DATA_PATH+subset+'/*.xml'
-        available_xml = glob.glob(dataset_dir)
+    def load_Doremi(self):
+        all_xml_files = []
+        for folder in FOLDERS:
+            dataset_dir = ROOT_PATH + folder + "/xml_by_page/*.xml"
+            print(dataset_dir)
+            available_xml = glob.glob(dataset_dir)
+            all_xml_files.extend(available_xml)
 
-        for xml_file in tqdm(available_xml, desc="XML Files"):
+        return all_xml_files
+
+    def split_data(self, all_xml_files):
+        train_files, test_files = train_test_split(all_xml_files, test_size=0.3, random_state=42)
+        val_files, test_files = train_test_split(test_files, test_size=0.5, random_state=42)
+        return train_files, val_files, test_files
+
+    def process_files(self, files):
+        for xml_file in tqdm(files, desc="XML Files"):
             filename = os.path.basename(xml_file)
             filename = filename[:-4]
 
@@ -30,15 +41,11 @@ class DoremiDataset:
 
             img_filename = filename + '.png'
 
-            img_path = IMG_PATH + img_filename
+            img_path = ROOT_PATH + "Images/" + img_filename  # assuming the images are stored in the "Images" subfolder
             img_height = 3504
             img_width = 2474
 
-            mask_arr = []
-
             nodes = xmldoc.getElementsByTagName('Node')
-
-            instances_count = len(xmldoc.getElementsByTagName('ClassName'))
 
             masks_info = []
             for node in nodes:
@@ -89,5 +96,14 @@ class DoremiDataset:
 
 # Test the DoremiDataset class
 doremi_dataset = DoremiDataset()
-doremi_dataset.load_Doremi("xml_by_page")
-# doremi_dataset.save_mapping("new_mapping.json")
+all_xml_files = doremi_dataset.load_Doremi()
+train_files, val_files, test_files = doremi_dataset.split_data(all_xml_files)
+
+print("Processing training files...")
+doremi_dataset.process_files(train_files)
+print("Processing validation files...")
+doremi_dataset.process_files(val_files)
+print("Processing test files...")
+doremi_dataset.process_files(test_files)
+
+# doremi_dataset.save_mapping("/homes/es314/pitch_Mask_RCNN/mapping.json")
