@@ -116,7 +116,7 @@ class DoremiDataset(utils.Dataset):
             page = xmldoc.getElementsByTagName('Page')
             page_index_str = page[0].attributes['pageIndex'].value
 
-            page_index_int = int(page_index_str) + 1
+            page_index_int = int(page_index_str)
             # Open image related to XML file
             # /homes/es314/DOREMI_version_2/data_v5/parsed_by_classnames/Parsed_accidental tucking-layout-0-muscima_Page_2.xml
             # Parsed_accidental tucking-layout-0-muscima_Page_2.xml
@@ -131,8 +131,7 @@ class DoremiDataset(utils.Dataset):
             start_str = 'Parsed_'
             # If page is 0, we need to add '000'
             leading_zeroes = str(page_index_int).zfill(3)
-            img_filename = filename[len(start_str):-ending]+'-'+leading_zeroes
-            img_filename = img_filename+'.png'
+            img_filename = filename + '.png'
             # /homes/es314/DOREMI_version_2/DOREMI_v3/images/beam groups 12 demisemiquavers simple-918.png'
 
             img_path = IMG_PATH + img_filename
