@@ -26,6 +26,8 @@ Usage: import the module (see Jupyter notebooks for examples), or run from
     # Apply color splash to video using the last weights you trained
     python3 Doremi.py splash --weights=last --video=<URL or path to file>
 """
+import os
+os.environ["CUDA_VISIBLE_DEVICES"]="0,1"
 import sys
 print(sys.executable)
 import os
@@ -38,6 +40,7 @@ from tqdm import tqdm
 from xml.dom import minidom
 from sklearn.model_selection import train_test_split
 from tensorflow.python.keras.saving import hdf5_format
+
 # Root directory of the project
 ROOT_DIR = os.path.abspath("/homes/es314/pitch_Mask_RCNN/only_position/train_test_val_records")
 
@@ -67,7 +70,7 @@ class DoremiConfig(Config):
 
     # We use a GPU with 12GB memory, which can fit two images.
     # Adjust down if you use a smaller GPU.
-    IMAGES_PER_GPU = 2
+    IMAGES_PER_GPU = 1
 
     # Number of classes (including background)
     NUM_CLASSES = 50 + 1  # Background + Doremi
@@ -77,6 +80,9 @@ class DoremiConfig(Config):
 
     # Skip detections with < 90% confidence
     DETECTION_MIN_CONFIDENCE = 0.9
+
+    IMAGE_MIN_DIM = 800
+    IMAGE_MAX_DIM = 1024
 
 
 ############################################################
@@ -88,47 +94,46 @@ ROOT_PATH = "/homes/es314/pitch_Mask_RCNN/only_position/"
 ############################################################
 #  Dataset
 ############################################################
+
 class DoremiDataset(utils.Dataset):
-    def __init__(self, subset):
-        assert subset in ["train", "val", "test"]
-        self.subset = subset
-        self.classname_set = set()  # Initialize classname_set
-        super().__init__(self)
+    def load_Doremi(self, subset):
+        """
+        Load a subset of the Doremi dataset.
+        subset: Subset to load: train or val
+        """
+        # Add classes. We have only one class to add.
+        with open('classnames.json') as json_file:  # replace with your classnames file
+            data = json.load(json_file)
+            for id_class in data:
+                self.add_class("doremi", id_class["id"], id_class["name"])
 
-
-    def load_Doremi(self):
-        all_xml_files = []
-        dataset_dir = ROOT_DIR + "/" + self.subset + "/*.xml"
+        # Train or validation dataset?
+        assert subset in ["train", "val"]
+        dataset_dir ='/homes/es314/pitch_Mask_RCNN/only_position/train_test_val_records/'+subset+'/*.xml'  # replace with your xml data path
+        print("--------------", dataset_dir)
         available_xml = glob.glob(dataset_dir)
-        all_xml_files.extend(available_xml)
 
-        self.process_files(all_xml_files)
-
-    def process_files(self, files):
-        for xml_file in tqdm(files, desc="XML Files"):
+        for xml_file in tqdm(available_xml, desc="XML Files"):
             filename = os.path.basename(xml_file)
-            filename = filename[:-4]
+            filename = filename[:-4]  # Remove .xml from end of file
+
             xmldoc = minidom.parse(xml_file)
 
-            img_filename = filename + '.png'
-            # print("______",img_filename)
+            page = xmldoc.getElementsByTagName('Page')
+            # page_index_str = page[0].attributes['pageIndex'].value
 
-            img_path = None
-            # for folder in FOLDERS:
-            potential_img_path = os.path.join(ROOT_PATH, "Images", img_filename)
-            # print("______", potential_img_path)
-            if os.path.exists(potential_img_path):
-                img_path = potential_img_path
-                break
+            # page_index_int = int(page_index_str) + 1
+            # leading_zeroes = str(page_index_int).zfill(3)
+            img_filename = filename
+            img_filename = img_filename+'.png'
 
-            if img_path is None:
-                print("Could not find image for XML file: ", xml_file)
-                continue
-
+            img_path = '/homes/es314/pitch_Mask_RCNN/only_position/Images/' + img_filename  # replace with your image data path
             img_height = 3504
             img_width = 2474
 
             nodes = xmldoc.getElementsByTagName('Node')
+
+            instances_count = len(xmldoc.getElementsByTagName('ClassName'))
 
             masks_info = []
             for node in nodes:
@@ -136,8 +141,7 @@ class DoremiDataset(utils.Dataset):
 
                 node_classname_el = node.getElementsByTagName('ClassName')[0]
                 node_classname = node_classname_el.firstChild.data
-                self.classname_set.add(node_classname)
-
+                
                 node_top = node.getElementsByTagName('Top')[0]
                 node_top_int = int(node_top.firstChild.data)
 
@@ -155,7 +159,6 @@ class DoremiDataset(utils.Dataset):
                 node_mask = node_mask.replace('1: ', '')
                 split_mask = node_mask.split(' ')
                 split_mask = split_mask[:-1]
-                
                 notehead_counts = list(map(int, list(split_mask)))
 
                 this_mask_info["classname"] = node_classname
@@ -167,31 +170,30 @@ class DoremiDataset(utils.Dataset):
 
                 masks_info.append(this_mask_info)
 
+            self.add_image(
+                    "doremi",
+                    image_id=img_filename,  
+                    path=img_path,
+                    img_width=img_width, img_height=img_height,
+                    masks_info=masks_info)
+
+    # ... continue with your load_mask and image_reference functions here
+
             # print("Image added: ID - {}, Path - {}, Width - {}, Height - {}, Masks Info - {}".format(img_filename, img_path, img_width, img_height, masks_info))
 
-    def save_mapping(self, mapping_path):
-        classname_list = list(self.classname_set)
-        id_classname_dict = [{"id": i+1, "name": classname} for i, classname in enumerate(classname_list)]
-        with open(mapping_path, 'w') as json_file:
-            json.dump(id_classname_dict, json_file, indent=4)
-        print("Mapping saved: {}".format(mapping_path))
+    # def save_mapping(self, mapping_path):
+    #     classname_list = list(self.classname_set)
+    #     id_classname_dict = [{"id": i+1, "name": classname} for i, classname in enumerate(classname_list)]
+    #     with open(mapping_path, 'w') as json_file:
+    #         json.dump(id_classname_dict, json_file, indent=4)
+    #     print("Mapping saved: {}".format(mapping_path))
 
 
 def train(model):
     """Train the model."""
     # Training dataset.
-    # dataset_train = DoremiDataset()
-    # dataset_train.load_Doremi(args.dataset, "xml_by_page")
-    # dataset_train.prepare()
-
-    # # Validation dataset
-    # dataset_val = DoremiDataset()
-    # dataset_val.load_Doremi(args.dataset, "val")
-    # dataset_val.prepare()
-    """Train the model."""
-    # Training dataset.
     dataset_train = DoremiDataset("train")
-    dataset_train.load_Doremi()
+    dataset_train.load_Doremi("train")
     dataset_train.prepare()
 
     # Validation dataset

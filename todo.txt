@@ -1,0 +1,17 @@
+fix the paths for the images and xml becuaswe noene is being loaded 
+
+(tf2_env) bash-4.2$ module list
+Currently Loaded Modulefiles:
+  1) cuda/10.2-cudnn7.6.5
+  or module load cuda/10.1-cudnn7.6.5
+  
+  
+  conda activate tf2_env
+
+
+  nohup python3 doremi_train.py train --dataset=/homes/es314/pitch_Mask_RCNN/only_position/train_test_val_records --weights=coco > test_gpu.txt
+
+
+
+  downgrading from tensorflow-gpu==2.3.1 to
+  pip install tensorflow-gpu==2.2

@@ -1,0 +1,104 @@
+WARNING:tensorflow:From /homes/es314/miniconda3/envs/tf2_env/lib/python3.8/site-packages/tensorflow/python/ops/resource_variable_ops.py:1659: calling BaseResourceVariable.__init__ (from tensorflow.python.ops.resource_variable_ops) with constraint is deprecated and will be removed in a future version.
+Instructions for updating:
+If using Keras pass *_constraint arguments to layers.
+2023-07-20 18:36:03.025575: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcuda.so.1
+2023-07-20 18:36:04.806807: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1561] Found device 0 with properties: 
+pciBusID: 0000:1a:00.0 name: NVIDIA RTX A5000 computeCapability: 8.6
+coreClock: 1.695GHz coreCount: 64 deviceMemorySize: 23.69GiB deviceMemoryBandwidth: 715.34GiB/s
+2023-07-20 18:36:04.812187: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1561] Found device 1 with properties: 
+pciBusID: 0000:1b:00.0 name: NVIDIA RTX A5000 computeCapability: 8.6
+coreClock: 1.695GHz coreCount: 64 deviceMemorySize: 23.69GiB deviceMemoryBandwidth: 715.34GiB/s
+2023-07-20 18:36:04.812868: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcudart.so.10.1
+2023-07-20 18:36:04.815385: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcublas.so.10
+2023-07-20 18:36:04.817423: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcufft.so.10
+2023-07-20 18:36:04.818038: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcurand.so.10
+2023-07-20 18:36:04.820671: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcusolver.so.10
+2023-07-20 18:36:04.822895: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcusparse.so.10
+2023-07-20 18:36:04.827979: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcudnn.so.7
+2023-07-20 18:36:04.850199: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1703] Adding visible gpu devices: 0, 1
+2023-07-20 18:36:08.564364: I tensorflow/core/platform/cpu_feature_guard.cc:143] Your CPU supports instructions that this TensorFlow binary was not compiled to use: AVX2 AVX512F FMA
+2023-07-20 18:36:08.583113: I tensorflow/core/platform/profile_utils/cpu_utils.cc:102] CPU Frequency: 2100000000 Hz
+2023-07-20 18:36:08.594499: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x1212f510 initialized for platform Host (this does not guarantee that XLA will be used). Devices:
+2023-07-20 18:36:08.595268: I tensorflow/compiler/xla/service/service.cc:176]   StreamExecutor device (0): Host, Default Version
+2023-07-20 18:36:11.276849: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x619e470 initialized for platform CUDA (this does not guarantee that XLA will be used). Devices:
+2023-07-20 18:36:11.276919: I tensorflow/compiler/xla/service/service.cc:176]   StreamExecutor device (0): NVIDIA RTX A5000, Compute Capability 8.6
+2023-07-20 18:36:11.276928: I tensorflow/compiler/xla/service/service.cc:176]   StreamExecutor device (1): NVIDIA RTX A5000, Compute Capability 8.6
+2023-07-20 18:36:11.324733: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1561] Found device 0 with properties: 
+pciBusID: 0000:1a:00.0 name: NVIDIA RTX A5000 computeCapability: 8.6
+coreClock: 1.695GHz coreCount: 64 deviceMemorySize: 23.69GiB deviceMemoryBandwidth: 715.34GiB/s
+2023-07-20 18:36:11.362505: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1561] Found device 1 with properties: 
+pciBusID: 0000:1b:00.0 name: NVIDIA RTX A5000 computeCapability: 8.6
+coreClock: 1.695GHz coreCount: 64 deviceMemorySize: 23.69GiB deviceMemoryBandwidth: 715.34GiB/s
+2023-07-20 18:36:11.362646: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcudart.so.10.1
+2023-07-20 18:36:11.362664: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcublas.so.10
+2023-07-20 18:36:11.362688: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcufft.so.10
+2023-07-20 18:36:11.362704: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcurand.so.10
+2023-07-20 18:36:11.362717: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcusolver.so.10
+2023-07-20 18:36:11.362733: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcusparse.so.10
+2023-07-20 18:36:11.362747: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcudnn.so.7
+2023-07-20 18:36:12.089440: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1703] Adding visible gpu devices: 0, 1
+2023-07-20 18:36:12.089598: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcudart.so.10.1
+2023-07-20 18:36:12.438690: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1102] Device interconnect StreamExecutor with strength 1 edge matrix:
+2023-07-20 18:36:12.438750: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1108]      0 1 
+2023-07-20 18:36:12.438765: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1121] 0:   N Y 
+2023-07-20 18:36:12.438772: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1121] 1:   Y N 
+2023-07-20 18:36:12.518447: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1247] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 22610 MB memory) -> physical GPU (device: 0, name: NVIDIA RTX A5000, pci bus id: 0000:1a:00.0, compute capability: 8.6)
+2023-07-20 18:36:12.535485: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1247] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:1 with 22610 MB memory) -> physical GPU (device: 1, name: NVIDIA RTX A5000, pci bus id: 0000:1b:00.0, compute capability: 8.6)
+/homes/es314/miniconda3/envs/tf2_env/bin/python3
+Weights:  coco
+Logs:  /homes/es314/pitch_Mask_RCNN/logs
+
+Configurations:
+BACKBONE                       resnet101
+BACKBONE_STRIDES               [4, 8, 16, 32, 64]
+BATCH_SIZE                     1
+BBOX_STD_DEV                   [0.1 0.1 0.2 0.2]
+COMPUTE_BACKBONE_SHAPE         None
+DETECTION_MAX_INSTANCES        100
+DETECTION_MIN_CONFIDENCE       0.9
+DETECTION_NMS_THRESHOLD        0.3
+FPN_CLASSIF_FC_LAYERS_SIZE     1024
+GPU_COUNT                      1
+GRADIENT_CLIP_NORM             5.0
+IMAGES_PER_GPU                 1
+IMAGE_CHANNEL_COUNT            3
+IMAGE_MAX_DIM                  1024
+IMAGE_META_SIZE                63
+IMAGE_MIN_DIM                  800
+IMAGE_MIN_SCALE                0
+IMAGE_RESIZE_MODE              square
+IMAGE_SHAPE                    [1024 1024    3]
+LEARNING_MOMENTUM              0.9
+LEARNING_RATE                  0.001
+LOSS_WEIGHTS                   {'rpn_class_loss': 1.0, 'rpn_bbox_loss': 1.0, 'mrcnn_class_loss': 1.0, 'mrcnn_bbox_loss': 1.0, 'mrcnn_mask_loss': 1.0}
+MASK_POOL_SIZE                 14
+MASK_SHAPE                     [28, 28]
+MAX_GT_INSTANCES               100
+MEAN_PIXEL                     [123.7 116.8 103.9]
+MINI_MASK_SHAPE                (56, 56)
+NAME                           Doremi
+NUM_CLASSES                    51
+POOL_SIZE                      7
+POST_NMS_ROIS_INFERENCE        1000
+POST_NMS_ROIS_TRAINING         2000
+PRE_NMS_LIMIT                  6000
+ROI_POSITIVE_RATIO             0.33
+RPN_ANCHOR_RATIOS              [0.5, 1, 2]
+RPN_ANCHOR_SCALES              (32, 64, 128, 256, 512)
+RPN_ANCHOR_STRIDE              1
+RPN_BBOX_STD_DEV               [0.1 0.1 0.2 0.2]
+RPN_NMS_THRESHOLD              0.7
+RPN_TRAIN_ANCHORS_PER_IMAGE    256
+STEPS_PER_EPOCH                100
+TOP_DOWN_PYRAMID_SIZE          256
+TRAIN_BN                       False
+TRAIN_ROIS_PER_IMAGE           200
+USE_MINI_MASK                  True
+USE_RPN_ROIS                   True
+VALIDATION_STEPS               50
+WEIGHT_DECAY                   0.0001
+
+
+Loading weights  /homes/es314/pitch_Mask_RCNN/logs/mask_rcnn_Doremi.h5
+-------------- /homes/es314/pitch_Mask_RCNN/only_position/train_test_val_records/train/*.xml
+XML Files:   0%|          | 0/4398 [00:00<?, ?it/s]XML Files:   0%|          | 1/4398 [00:00<27:05,  2.70it/s]XML Files:   0%|          | 2/4398 [00:00<17:16,  4.24it/s]XML Files:   0%|          | 4/4398 [00:00<10:17,  7.12it/s]XML Files:   0%|          | 7/4398 [00:00<06:14, 11.71it/s]XML Files:   0%|          | 9/4398 [00:01<10:17,  7.10it/s]XML Files:   0%|          | 11/4398 [00:01<08:37,  8.48it/s]XML Files:   0%|          | 13/4398 [00:01<07:51,  9.30it/s]XML Files:   0%|          | 15/4398 [00:02<10:31,  6.94it/s]XML Files:   0%|          | 17/4398 [00:02<10:14,  7.13it/s]XML Files:   0%|          | 19/4398 [00:02<10:09,  7.19it/s]XML Files:   0%|          | 21/4398 [00:02<08:41,  8.40it/s]XML Files:   1%|          | 23/4398 [00:02<07:13, 10.10it/s]XML Files:   1%|          | 25/4398 [00:03<08:59,  8.10it/s]XML Files:   1%|          | 27/4398 [00:03<11:12,  6.50it/s]XML Files:   1%|          | 31/4398 [00:03<06:51, 10.60it/s]XML Files:   1%|          | 34/4398 [00:03<05:31, 13.17it/s]XML Files:   1%|          | 37/4398 [00:04<06:30, 11.16it/s]XML Files:   1%|          | 39/4398 [00:04<06:17, 11.56it/s]XML Files:   1%|          | 42/4398 [00:04<05:01, 14.46it/s]XML Files:   1%|          | 45/4398 [00:04<04:11, 17.32it/s]XML Files:   1%|          | 48/4398 [00:05<06:59, 10.38it/s]XML Files:   1%|          | 50/4398 [00:05<10:18,  7.03it/s]XML Files:   1%|          | 53/4398 [00:05<08:34,  8.44it/s]XML Files:   1%|▏         | 58/4398 [00:06<05:27, 13.24it/s]XML Files:   1%|▏         | 61/4398 [00:06<07:13, 10.01it/s]XML Files:   1%|▏         | 65/4398 [00:06<05:37, 12.85it/s]XML Files:   2%|▏         | 68/4398 [00:06<04:54, 14.69it/s]XML Files:   2%|▏         | 71/4398 [00:07<05:48, 12.40it/s]XML Files:   2%|▏         | 75/4398 [00:07<04:32, 15.89it/s]XML Files:   2%|▏         | 79/4398 [00:07<03:40, 19.62it/s]XML Files:   2%|▏         | 82/4398 [00:07<03:20, 21.56it/s]XML Files:   2%|▏         | 87/4398 [00:07<02:50, 25.23it/s]XML Files:   2%|▏         | 91/4398 [00:07<03:58, 18.10it/s]XML Files:   2%|▏         | 94/4398 [00:08<03:48, 18.82it/s]XML Files:   2%|▏         | 98/4398 [00:08<03:15, 21.97it/s]XML Files:   2%|▏         | 102/4398 [00:08<02:49, 25.28it/s]XML Files:   2%|▏         | 105/4398 [00:08<04:12, 17.02it/s]XML Files:   2%|▏         | 108/4398 [00:09<06:40, 10.71it/s]XML Files:   3%|▎         | 111/4398 [00:09<05:32, 12.91it/s]XML Files:   3%|▎         | 115/4398 [00:09<04:22, 16.33it/s]XML Files:   3%|▎         | 120/4398 [00:09<03:17, 21.69it/s]XML Files:   3%|▎         | 124/4398 [00:09<04:11, 17.00it/s]XML Files:   3%|▎         | 129/4398 [00:10<03:35, 19.81it/s]XML Files:   3%|▎         | 132/4398 [00:10<03:25, 20.77it/s]XML Files:   3%|▎         | 136/4398 [00:10<03:01, 23.43it/s]XML Files:   3%|▎         | 139/4398 [00:10<04:38, 15.30it/s]XML Files:   3%|▎         | 142/4398 [00:11<05:51, 12.09it/s]XML Files:   3%|▎         | 145/4398 [00:11<05:01, 14.13it/s]XML Files:   3%|▎         | 150/4398 [00:11<03:42, 19.09it/s]XML Files:   4%|▎         | 155/4398 [00:11<02:53, 24.49it/s]XML Files:   4%|▎         | 159/4398 [00:11<04:15, 16.57it/s]XML Files:   4%|▎         | 162/4398 [00:12<03:49, 18.46it/s]XML Files:   4%|▍         | 165/4398 [00:12<03:29, 20.23it/s]XML Files:   4%|▍         | 168/4398 [00:12<03:26, 20.48it/s]XML Files:   4%|▍         | 171/4398 [00:13<07:17,  9.67it/s]XML Files:   4%|▍         | 175/4398 [00:13<05:28, 12.86it/s]XML Files:   4%|▍         | 178/4398 [00:13<04:43, 14.86it/s]XML Files:   4%|▍         | 182/4398 [00:13<03:44, 18.82it/s]XML Files:   4%|▍         | 185/4398 [00:13<03:40, 19.14it/s]XML Files:   4%|▍         | 188/4398 [00:13<04:31, 15.49it/s]XML Files:   4%|▍         | 192/4398 [00:13<03:41, 18.99it/s]XML Files:   4%|▍         | 195/4398 [00:14<03:37, 19.31it/s]XML Files:   5%|▍         | 199/4398 [00:14<03:14, 21.57it/s]XML Files:   5%|▍         | 202/4398 [00:14<04:51, 14.41it/s]XML Files:   5%|▍         | 206/4398 [00:14<03:56, 17.74it/s]XML Files:   5%|▍         | 209/4398 [00:14<03:33, 19.59it/s]XML Files:   5%|▍         | 212/4398 [00:14<03:15, 21.44it/s]XML Files:   5%|▍         | 215/4398 [00:15<04:18, 16.19it/s]XML Files:   5%|▍         | 219/4398 [00:15<03:28, 20.03it/s]XML Files:   5%|▌         | 222/4398 [00:15<03:09, 22.02it/s]XML Files:   5%|▌         | 225/4398 [00:15<03:30, 19.82it/s]XML Files:   5%|▌         | 228/4398 [00:15<04:37, 15.02it/s]XML Files:   5%|▌         | 232/4398 [00:16<04:25, 15.66it/s]XML Files:   5%|▌         | 234/4398 [00:16<06:28, 10.72it/s]XML Files:   5%|▌         | 238/4398 [00:16<04:52, 14.24it/s]XML Files:   5%|▌         | 241/4398 [00:16<04:12, 16.49it/s]XML Files:   6%|▌         | 244/4398 [00:16<03:50, 18.05it/s]XML Files:   6%|▌         | 247/4398 [00:17<03:25, 20.17it/s]XML Files:   6%|▌         | 250/4398 [00:17<03:19, 20.75it/s]XML Files:   6%|▌         | 253/4398 [00:17<05:56, 11.63it/s]XML Files:   6%|▌         | 255/4398 [00:18<07:04,  9.76it/s]XML Files:   6%|▌         | 259/4398 [00:18<05:41, 12.13it/s]XML Files:   6%|▌         | 262/4398 [00:18<04:46, 14.42it/s]XML Files:   6%|▌         | 267/4398 [00:18<04:42, 14.63it/s]XML Files:   6%|▌         | 270/4398 [00:18<05:02, 13.65it/s]XML Files:   6%|▌         | 274/4398 [00:19<05:35, 12.29it/s]XML Files:   6%|▋         | 277/4398 [00:19<04:44, 14.48it/s]XML Files:   6%|▋         | 280/4398 [00:19<04:07, 16.66it/s]XML Files:   6%|▋         | 283/4398 [00:19<03:38, 18.84it/s]XML Files:   7%|▋         | 286/4398 [00:20<05:24, 12.66it/s]XML Files:   7%|▋         | 289/4398 [00:20<04:50, 14.15it/s]XML Files:   7%|▋         | 293/4398 [00:20<04:00, 17.05it/s]XML Files:   7%|▋         | 296/4398 [00:20<05:02, 13.55it/s]XML Files:   7%|▋         | 298/4398 [00:22<13:05,  5.22it/s]XML Files:   7%|▋         | 300/4398 [00:22<12:13,  5.59it/s]XML Files:   7%|▋         | 302/4398 [00:22<11:42,  5.83it/s]XML Files:   7%|▋         | 306/4398 [00:22<07:34,  9.00it/s]XML Files:   7%|▋         | 309/4398 [00:22<06:05, 11.20it/s]XML Files:   7%|▋         | 313/4398 [00:22<04:34, 14.90it/s]XML Files:   7%|▋         | 317/4398 [00:23<03:39, 18.61it/s]XML Files:   7%|▋         | 320/4398 [00:23<03:30, 19.41it/s]XML Files:   7%|▋         | 324/4398 [00:23<05:08, 13.20it/s]XML Files:   7%|▋         | 327/4398 [00:23<04:23, 15.46it/s]XML Files:   8%|▊         | 332/4398 [00:23<03:28, 19.52it/s]XML Files:   8%|▊         | 336/4398 [00:24<02:59, 22.57it/s]XML Files:   8%|▊         | 340/4398 [00:24<02:53, 23.35it/s]XML Files:   8%|▊         | 343/4398 [00:24<04:15, 15.87it/s]XML Files:   8%|▊         | 346/4398 [00:24<04:40, 14.43it/s]XML Files:   8%|▊         | 351/4398 [00:24<03:27, 19.47it/s]XML Files:   8%|▊         | 354/4398 [00:25<04:25, 15.25it/s]XML Files:   8%|▊         | 357/4398 [00:25<06:22, 10.57it/s]XML Files:   8%|▊         | 362/4398 [00:25<04:29, 14.99it/s]XML Files:   8%|▊         | 368/4398 [00:26<03:15, 20.64it/s]XML Files:   8%|▊         | 372/4398 [00:26<03:35, 18.67it/s]XML Files:   9%|▊         | 376/4398 [00:26<03:09, 21.28it/s]XML Files:   9%|▊         | 379/4398 [00:26<03:59, 16.80it/s]XML Files:   9%|▊         | 383/4398 [00:26<03:21, 19.96it/s]XML Files:   9%|▉         | 387/4398 [00:26<02:58, 22.41it/s]XML Files:   9%|▉         | 391/4398 [00:27<02:37, 25.37it/s]XML Files:   9%|▉         | 395/4398 [00:27<02:39, 25.14it/s]XML Files:   9%|▉         | 398/4398 [00:27<03:40, 18.12it/s]XML Files:   9%|▉         | 401/4398 [00:27<03:28, 19.17it/s]XML Files:   9%|▉         | 405/4398 [00:27<03:01, 22.03it/s]XML Files:   9%|▉         | 408/4398 [00:27<02:59, 22.29it/s]XML Files:   9%|▉         | 411/4398 [00:28<05:30, 12.06it/s]XML Files:   9%|▉         | 413/4398 [00:28<05:21, 12.39it/s]XML Files:   9%|▉         | 417/4398 [00:28<04:17, 15.48it/s]XML Files:  10%|▉         | 421/4398 [00:28<03:27, 19.12it/s]XML Files:  10%|▉         | 426/4398 [00:29<04:14, 15.60it/s]XML Files:  10%|▉         | 429/4398 [00:29<03:59, 16.55it/s]XML Files:  10%|▉         | 432/4398 [00:30<06:53,  9.60it/s]XML Files:  10%|▉         | 434/4398 [00:30<06:27, 10.24it/s]XML Files:  10%|▉         | 439/4398 [00:30<04:23, 15.00it/s]XML Files:  10%|█         | 442/4398 [00:30<05:19, 12.40it/s]XML Files:  10%|█         | 445/4398 [00:30<04:28, 14.74it/s]XML Files:  10%|█         | 449/4398 [00:30<03:33, 18.47it/s]XML Files:  10%|█         | 452/4398 [00:31<04:57, 13.26it/s]XML Files:  10%|█         | 455/4398 [00:31<04:26, 14.78it/s]XML Files:  10%|█         | 458/4398 [00:31<04:01, 16.30it/s]XML Files:  10%|█         | 461/4398 [00:31<03:46, 17.40it/s]XML Files:  11%|█         | 464/4398 [00:32<05:21, 12.25it/s]XML Files:  11%|█         | 466/4398 [00:32<05:18, 12.36it/s]XML Files:  11%|█         | 469/4398 [00:32<05:02, 12.99it/s]XML Files:  11%|█         | 472/4398 [00:32<05:33, 11.76it/s]XML Files:  11%|█         | 474/4398 [00:33<05:17, 12.37it/s]XML Files:  11%|█         | 477/4398 [00:33<04:19, 15.11it/s]XML Files:  11%|█         | 479/4398 [00:33<06:50,  9.55it/s]XML Files:  11%|█         | 484/4398 [00:33<04:54, 13.31it/s]XML Files:  11%|█         | 487/4398 [00:33<04:08, 15.74it/s]XML Files:  11%|█         | 490/4398 [00:34<03:38, 17.89it/s]XML Files:  11%|█         | 493/4398 [00:34<08:36,  7.56it/s]XML Files:  11%|█▏        | 495/4398 [00:35<07:48,  8.33it/s]XML Files:  11%|█▏        | 497/4398 [00:35<06:58,  9.33it/s]XML Files:  11%|█▏        | 499/4398 [00:35<08:41,  7.48it/s]XML Files:  11%|█▏        | 501/4398 [00:35<07:46,  8.36it/s]XML Files:  12%|█▏        | 506/4398 [00:36<06:12, 10.44it/s]XML Files:  12%|█▏        | 509/4398 [00:36<05:02, 12.85it/s]XML Files:  12%|█▏        | 514/4398 [00:36<03:33, 18.18it/s]XML Files:  12%|█▏        | 517/4398 [00:36<03:18, 19.60it/s]XML Files:  12%|█▏        | 520/4398 [00:36<03:04, 20.98it/s]
