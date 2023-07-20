@@ -198,7 +198,7 @@ def train(model):
 
     # Validation dataset
     dataset_val = DoremiDataset("val")
-    dataset_val.load_Doremi()
+    dataset_val.load_Doremi("val")
     dataset_val.prepare()
     # *** This training schedule is an example. Update to your needs ***
     # Since we're using a very small dataset, and starting from
