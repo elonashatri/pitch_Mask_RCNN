@@ -27,10 +27,9 @@ Usage: import the module (see Jupyter notebooks for examples), or run from
     python3 Doremi.py splash --weights=last --video=<URL or path to file>
 """
 import os
-os.environ["CUDA_VISIBLE_DEVICES"]="0,1"
+os.environ["CUDA_VISIBLE_DEVICES"]="0"
 import sys
 print(sys.executable)
-import os
 import json
 import datetime
 import numpy as np
@@ -48,9 +47,10 @@ ROOT_DIR = os.path.abspath("/homes/es314/pitch_Mask_RCNN/only_position/train_tes
 # sys.path.append(ROOT_DIR)  # To find local version of the library
 from mrcnn.config import Config
 from mrcnn import model as modellib, utils
-
+CLASSNAMES_PATH = '/homes/es314/pitch_Mask_RCNN/only_position/train_test_val_records/classnames.json'
 # Path to trained weights file
-COCO_WEIGHTS_PATH = COCO_WEIGHTS_PATH = '/homes/es314/pitch_Mask_RCNN/logs/mask_rcnn_Doremi.h5'
+COCO_WEIGHTS_PATH = COCO_WEIGHTS_PATH = '/import/c4dm-05/elona/maskrcnn-logs/1685_dataset_resnet101_coco_april_exp/doremi20220414T1249/mask_rcnn_doremi_0029.h5'
+# '/homes/es314/pitch_Mask_RCNN/logs/mask_rcnn_Doremi.h5'
 
 # Directory to save logs and model checkpoints, if not provided
 # through the command line argument --logs
@@ -96,23 +96,25 @@ ROOT_PATH = "/homes/es314/pitch_Mask_RCNN/only_position/"
 ############################################################
 
 class DoremiDataset(utils.Dataset):
-    def load_Doremi(self, subset):
+    def load_mask(self, subset):
         """
         Load a subset of the Doremi dataset.
         subset: Subset to load: train or val
         """
         # Add classes. We have only one class to add.
-        with open('classnames.json') as json_file:  # replace with your classnames file
+        with open(CLASSNAMES_PATH) as json_file:  # replace with your classnames file
             data = json.load(json_file)
             for id_class in data:
                 self.add_class("doremi", id_class["id"], id_class["name"])
 
         # Train or validation dataset?
+        print(f"The value of subset is: {subset}")
         assert subset in ["train", "val"]
         dataset_dir ='/homes/es314/pitch_Mask_RCNN/only_position/train_test_val_records/'+subset+'/*.xml'  # replace with your xml data path
         print("--------------", dataset_dir)
         available_xml = glob.glob(dataset_dir)
-
+        print("length", len(available_xml))
+        # image_folder_names = ['pianoform', 'monophonic', 'polyphonic', 'homophonic']
         for xml_file in tqdm(available_xml, desc="XML Files"):
             filename = os.path.basename(xml_file)
             filename = filename[:-4]  # Remove .xml from end of file
@@ -126,10 +128,15 @@ class DoremiDataset(utils.Dataset):
             # leading_zeroes = str(page_index_int).zfill(3)
             img_filename = filename
             img_filename = img_filename+'.png'
-
-            img_path = '/homes/es314/pitch_Mask_RCNN/only_position/Images/' + img_filename  # replace with your image data path
+            img_found = False                     
             img_height = 3504
             img_width = 2474
+
+            img_path = '/homes/es314/pitch_Mask_RCNN/only_position/Images/' + img_filename  # replace with your image data path
+            # if os.path.exists(img_path):  # Check if the image exists
+            #     img_found = True  # Update the variable
+
+            #     break
 
             nodes = xmldoc.getElementsByTagName('Node')
 
@@ -177,6 +184,10 @@ class DoremiDataset(utils.Dataset):
                     img_width=img_width, img_height=img_height,
                     masks_info=masks_info)
 
+        # if not img_found:
+        #     print(f"Image {img_filename} not found in any of the folders.")
+        #     continue
+
     # ... continue with your load_mask and image_reference functions here
 
             # print("Image added: ID - {}, Path - {}, Width - {}, Height - {}, Masks Info - {}".format(img_filename, img_path, img_width, img_height, masks_info))
@@ -192,23 +203,58 @@ class DoremiDataset(utils.Dataset):
 def train(model):
     """Train the model."""
     # Training dataset.
-    dataset_train = DoremiDataset("train")
-    dataset_train.load_Doremi("train")
+    dataset_train = DoremiDataset()
+    dataset_train.load_mask("train")
     dataset_train.prepare()
 
     # Validation dataset
-    dataset_val = DoremiDataset("val")
-    dataset_val.load_Doremi("val")
+    dataset_val = DoremiDataset()
+    dataset_val.load_mask("val")
     dataset_val.prepare()
     # *** This training schedule is an example. Update to your needs ***
     # Since we're using a very small dataset, and starting from
     # COCO trained weights, we don't need to train too long. Also,
     # no need to train all layers, just the heads should do it.
+    chosen_layers = "heads"
     print("Training network heads")
     model.train(dataset_train, dataset_val,
                 learning_rate=config.LEARNING_RATE,
                 epochs=30,
                 layers='heads')
+
+############################################################
+#  Evaluation
+############################################################
+def evaluate(model, inference_config):
+
+    # Validation dataset
+    dataset_val = DoremiDataset()
+    # dataset_val.load_doremi(args. dataset, "val")
+    dataset_val.load_doremi("val")
+    dataset_val.prepare()
+
+    print("Evaluating")
+
+    # Compute VOC-Style mAP @ IoU=0.5
+    # Running on 10 images. Increase for better accuracy.
+    image_ids = np.random.choice(dataset_val.image_ids, 50)
+    APs = []
+    for image_id in image_ids:
+        # Load image and ground truth data
+        image, image_meta, gt_class_id, gt_bbox, gt_mask =\
+            modellib.load_image_gt(dataset_val, inference_config,
+                                image_id, use_mini_mask=False)
+        molded_images = np.expand_dims(modellib.mold_image(image, inference_config), 0)
+        # Run object detection
+        results = model.detect([image], verbose=0)
+        r = results[0]
+        # Compute AP
+        AP, precisions, recalls, overlaps =\
+            utils.compute_ap(gt_bbox, gt_class_id, gt_mask,
+                            r["rois"], r["class_ids"], r["scores"], r['masks'])
+        APs.append(AP)
+        
+    print("mAP: ", np.mean(APs))
 
 
 def color_splash(image, mask):
